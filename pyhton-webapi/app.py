@@ -8,7 +8,7 @@ app = Flask(__name__)
 api = Api(app, version='1.0', title='Python WEB API')
 ns = api.namespace('users', description='endpoints')
 
-connection_string = "mongodb+srv://fatihdursunfd:Fatih.6116@cluster0.xu9mo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+connection_string = ""
 
 try:
     cluster = MongoClient(connection_string)
