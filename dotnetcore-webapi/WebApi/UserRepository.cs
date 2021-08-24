@@ -16,11 +16,9 @@ public class UserRepository : IUserRepository
         _context = new UserContext(settings);
     }
 
-    public bool AddUser(User item)
+    public void AddUser(User item)
     {
         _context.Users.InsertOne(item);
-        System.Console.WriteLine("item : " + item);
-        return true;   
     }
     public List<User> GetAllUsers()
     {
@@ -30,10 +28,10 @@ public class UserRepository : IUserRepository
 
     public User GetUserById(int id)
     {
-            var filter = Builders<User>.Filter.Eq("UserId", id);
-            var user = _context.Users.Find(filter).FirstOrDefault();
+        var filter = Builders<User>.Filter.Eq("UserId", id);
+        var user = _context.Users.Find(filter).FirstOrDefault();
             
-            return user;
+        return user;
     }
 
     public bool DeleteUserById(int id)
@@ -52,7 +50,6 @@ public class UserRepository : IUserRepository
 
     public bool UpdateUser(int id, User updateduser)
     {   
-        
         throw new System.NotImplementedException();
     }
 }

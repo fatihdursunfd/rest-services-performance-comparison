@@ -7,7 +7,8 @@ public interface IUserRepository
 {
     List<User> GetAllUsers();
     User GetUserById(int id);
-    bool AddUser(User item);
+    void AddUser(User item);
     bool UpdateUser(int id, User item);
     bool DeleteUserById(int id);
 }
+

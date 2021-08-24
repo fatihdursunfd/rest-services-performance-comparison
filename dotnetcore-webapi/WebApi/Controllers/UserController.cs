@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
@@ -16,10 +19,12 @@ namespace WebApi.Controllers
     {
 
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IMapper mapper)
         {
-            _userRepository = userRepository ;
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         /*
@@ -34,19 +39,16 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public UserGetView GetUserById(int id)
         {
+            GetByIdValidator gv = new GetByIdValidator();
+            gv.UserId = id;
+
+            UserGetByIdValidator validator = new UserGetByIdValidator();
+            validator.ValidateAndThrow(gv);
+
             var result =  _userRepository.GetUserById(id);
             
-            var getview = new UserGetView{
-                UserId = result.UserId,
-                Name = result.Name,
-                SurName = result.SurName,
-                Birthday = result.Birthday,
-                Age = DateTime.Today.Year - result.Birthday.Year,
-                address = new Address{
-                    State = result.address.State,
-                    PostalCode = result.address.PostalCode
-                    }
-                };
+            var getview = _mapper.Map<UserGetView>(result);
+
             return getview;
         }
 
@@ -54,23 +56,18 @@ namespace WebApi.Controllers
         public IActionResult AddUser([FromBody] UserPostView newuser)
         {
 
-            var user = new User{
-                Id = ObjectId.GenerateNewId(),
-                UserId = newuser.UserId,
-                Name = newuser.Name,
-                SurName = newuser.SurName,
-                Birthday = newuser.Birthday,
-                Age = DateTime.Today.Year - newuser.Birthday.Year,
-                address = new Address{
-                    State = newuser.address.State,
-                    PostalCode = newuser.address.PostalCode
-                    }
-                };
+            // validation
+            UserPostValidator validator = new UserPostValidator();
+            validator.ValidateAndThrow(newuser);
 
-            if(_userRepository.AddUser(user))
-                return Ok();
-                
-            return BadRequest();
+                // mapping
+            var user = _mapper.Map<User>(newuser);
+            user.Age = DateTime.Today.Year - newuser.Birthday.Year;
+
+
+            _userRepository.AddUser(user);
+            return Ok();
+            
         }
 
         [HttpPut("{id}")]
@@ -82,6 +79,12 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteUserById(int id)
         {
+            DeleteByIdValidator gv = new DeleteByIdValidator();
+            gv.UserId = id;
+
+            UserDeleteByIdValidator validator = new UserDeleteByIdValidator();
+            validator.ValidateAndThrow(gv);
+
             if(_userRepository.DeleteUserById(id))
                 return Ok();
             else

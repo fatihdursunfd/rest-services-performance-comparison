@@ -80,3 +80,7 @@ C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\obj\Debug\ne
 C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\obj\Debug\net5.0\ref\WebApi.dll
 C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\obj\Debug\net5.0\WebApi.pdb
 C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\obj\Debug\net5.0\WebApi.genruntimeconfig.cache
+C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\bin\Debug\net5.0\FluentValidation.dll
+C:\Users\fatih\OneDrive\Masaüstü\dotnet\dotnetcore-webapi2\WebApi\bin\Debug\net5.0\Newtonsoft.Json.dll
